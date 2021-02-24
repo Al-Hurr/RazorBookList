@@ -45,7 +45,7 @@
                             </td>
                             <td>
                                 <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm">Edit</a>
-                                <button class="btn btn-danger btn-sm">Delete</button>
+                                <button asp-page-handler="Delete" asp-route-id="@item.Id" onclick="return confirm('Do you want to delete the entry?')" class="btn btn-danger btn-sm">Delete</button>
                             </td>
                         </tr>
                     }
