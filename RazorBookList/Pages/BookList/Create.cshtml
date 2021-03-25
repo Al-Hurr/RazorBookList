@@ -1,53 +1,48 @@
 ﻿@page
 @model RazorBookList.Pages.BookList.CreateModel
 @{
+    Layout = null;
 }
 
-<br />
-<h2 class="text-info">Create new book</h2>
-<br />
+<div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
 
-<div class="border container" style="padding: 30px;">
-    <form method="post">
-        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-        <div class="form-group row">
-            <div class="col-3">
-                <label asp-for="Book.Name"></label>
-            </div>
-            <div class="col-6">
-                <input class="form-control" asp-for="Book.Name" />
-            </div>
-            <span asp-validation-for="Book.Name" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-3">
-                <label asp-for="Book.Author"></label>
-            </div>
-            <div class="col-6">
-                <input class="form-control" asp-for="Book.Author" />
-            </div>
-            <span asp-validation-for="Book.Author" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-3">
-                <label asp-for="Book.ISBN"></label>
-            </div>
-            <div class="col-6">
-                <input class="form-control" asp-for="Book.ISBN" />
-            </div>
-            <span asp-validation-for="Book.ISBN" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2 offset-3">
-                <input type="submit" value="Create" class="btn btn-primary form-control" />
-            </div>
-            <div class="col-2">
-                <a asp-page="Index" class="btn btn-success form-control">Cancel</a> 
+            <div class="row">
+                <div class="col-md-12">
+                    <form asp-action="OnPost">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Book.Name" class="control-label"></label>
+                            <input asp-for="Book.Name" class="form-control" />
+                            <span asp-validation-for="Book.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Book.AuthorId" class="control-label"></label>
+                            <select class="form-control" asp-for="Book.AuthorId" asp-items="Model.Authors"></select>
+                            <span asp-validation-for="Book.AuthorId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Book.ISBN" class="control-label"></label>
+                            <input asp-for="Book.ISBN" class="form-control" />
+                            <span asp-validation-for="Book.ISBN" class="text-danger"></span>
+                        </div>
+                        <hr />
+                        <div class="form-group row">
+                            <div class="col-4">
+                                <input type="submit" value="Create" class="btn btn-primary form-control sub" />
+                            </div>
+                            <div class="col-4">
+                                <a asp-page="Index" class="btn btn-success form-control">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 @section Scripts {
-<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

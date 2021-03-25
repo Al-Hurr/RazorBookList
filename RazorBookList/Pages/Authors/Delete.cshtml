@@ -1,0 +1,70 @@
+﻿@page
+@model RazorBookList.Pages.Authors.DeleteModel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            @if (!Model.IsRelated)
+            {
+                <P class="h3">Do you really want to delete the entry?</P>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-route-id="@Model.Author.Id" method="post">
+                            <table class="table">
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Author.FirstName)</th>
+                                    <td>@Html.DisplayFor(model => model.Author.FirstName)</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Author.LastName)</th>
+                                    <td>@Html.DisplayFor(model => model.Author.LastName)</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Author.Email)</th>
+                                    <td>@Html.DisplayFor(model => model.Author.Email)</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Author.City)</th>
+                                    <td>@Html.DisplayFor(model => model.Author.City)</td>
+                                </tr>
+                            </table>
+                            <hr />
+                            <div class="form-group row">
+                                <div class="col-4">
+                                    <input type="submit" value="Delete" class="btn btn-danger form-control sub" />
+                                </div>
+                                <div class="col-4">
+                                    <a asp-page="Index"><span class="btn btn-success form-control">Cancel</span></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <P class="h3 text-danger col-12">
+                        Error.
+                    </P>
+                    <p class="h3 text-danger col-12">
+                    The author is linked by other posts.
+                    </P>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-4">
+                                <a asp-page="Index"><span class="btn btn-success form-control">Cancel</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

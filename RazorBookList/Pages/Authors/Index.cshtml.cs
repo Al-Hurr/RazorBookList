@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
 
-namespace RazorBookList.Pages.BookList
+namespace RazorAuthors.Pages.Authors
 {
     public class IndexModel : PageModel
     {
@@ -19,29 +19,16 @@ namespace RazorBookList.Pages.BookList
             _context = context;
         }
 
-        public List<Book> Books { get; set; }
+        public List<Author> Authors { get; set; }
 
         public async Task OnGet()
         {
-            Books = await _context.Books
-                .Include(x => x.Author)
-                .ToListAsync();
+            Authors = await _context.Authors.ToListAsync();
         }
 
-        public async Task<IActionResult> OnPostDelete(int? id)
+        public bool IsRelated(int id)
         {
-            if (!id.HasValue)
-                return NotFound();
-
-            var book = await _context.Books.FindAsync(id.Value);
-
-            if(book == null)
-                return NotFound();
-
-            _context.Books.Remove(book);
-            _context.SaveChanges();
-
-            return RedirectToPage();
+            return  _context.Books.Any(x => x.Author.Id == id);
         }
     }
 }

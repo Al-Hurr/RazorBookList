@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
 
 namespace RazorBookList.Pages.BookList
@@ -18,18 +20,29 @@ namespace RazorBookList.Pages.BookList
         }
 
         [BindProperty]
-        public Book Book { get; set; }
+        public BookCreateModel Book { get; set; }
 
-        public void OnGet()
+        public SelectList Authors { get; set; }
+
+        public async Task OnGet()
         {
+            var authors = await _context.Authors.ToListAsync();
 
+            Authors = new SelectList(authors, nameof(Author.Id), nameof(Author.LastName));
         }
 
         public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
-                await _context.AddAsync(Book);
+                var book = new Book()
+                {
+                    Name = Book.Name,
+                    Author = await _context.Authors.FindAsync(Book.AuthorId),
+                    ISBN = Book.ISBN
+                };
+
+                await _context.AddAsync(book);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("Index");
             }

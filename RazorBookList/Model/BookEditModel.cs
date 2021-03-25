@@ -6,21 +6,15 @@ using System.Threading.Tasks;
 
 namespace RazorBookList.Model
 {
-    public class Book
+    public class BookEditModel
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Name")]
         public string Name { get; set; }
 
+        public int AuthorId { get; set; }
 
-        [Display(Name = "Author name")]
-        public Author Author { get; set; }
-
-
-        [Display(Name = "ISBN")]
         public string ISBN { get; set; }
     }
 }

@@ -1,0 +1,42 @@
+﻿@page
+@model RazorBookList.Pages.BookList.DeleteModel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+                <P class="h3">Do you really want to delete the entry?</P>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-route-id="@Model.Book.Id" method="post">
+                            <table class="table">
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Book.Name)</th>
+                                    <td>@Html.DisplayFor(model => model.Book.Name)</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Book.Author.LastName)</th>
+                                    <td>@Html.DisplayFor(model => model.Book.Author.LastName)</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Book.ISBN)</th>
+                                    <td>@Html.DisplayFor(model => model.Book.ISBN)</td>
+                                </tr>
+                            </table>
+                            <hr />
+                            <div class="form-group row">
+                                <div class="col-4">
+                                    <input type="submit" value="Delete" class="btn btn-danger form-control sub" />
+                                </div>
+                                <div class="col-4">
+                                    <a asp-page="Index"><span class="btn btn-success form-control">Cancel</span></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

@@ -53,7 +53,7 @@ namespace RazorBookList
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers();   
                 endpoints.MapRazorPages();
             });
         }

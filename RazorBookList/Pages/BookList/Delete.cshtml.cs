@@ -4,44 +4,52 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
 
 namespace RazorBookList.Pages.BookList
 {
-    public class IndexModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly ApplicationDbContext _context;
 
-        public IndexModel(ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public List<Book> Books { get; set; }
+        [BindProperty]
+        public Book Book { get; set; }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet(int? id)
         {
-            Books = await _context.Books
+            if (!id.HasValue)
+                return NotFound();
+
+            Book = await _context.Books
                 .Include(x => x.Author)
-                .ToListAsync();
+                .FirstOrDefaultAsync(x => x.Id == id.Value);
+
+            if (Book == null)
+                return NotFound();
+
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostDelete(int? id)
+        public async Task<IActionResult> OnPost(int? id)
         {
             if (!id.HasValue)
                 return NotFound();
 
             var book = await _context.Books.FindAsync(id.Value);
 
-            if(book == null)
+            if (book == null)
                 return NotFound();
 
             _context.Books.Remove(book);
             _context.SaveChanges();
 
-            return RedirectToPage();
+            return RedirectToPage("Index");
         }
     }
 }
