@@ -1,47 +1,46 @@
 ﻿@page
-@model RazorBookList.Pages.BookList.IndexModel
+@model RazorAuthors.Pages.Stores.IndexModel
 @{
 }
 
 <br />
-
 <div class="container row p-0 m-0">
     <div class="col-9">
-        <h2 class="text-info text-black-50">Books List</h2>
+        <h2 class="text-info text-black-50">Stores List</h2>
     </div>
     <div class="col-3">
         <form method="post">
-            <a class="btn btn-info form-control text-white openmodal" asp-page="/BookList/Create">Add new book</a>
+            <a class="btn btn-info form-control text-white openmodal" asp-page="/Stores/Create">Add new store</a>
         </form>
     </div>
     <div class="col-12 border mt-3 p-3">
         <form method="post">
-            @if (Model.Books.Any())
+            @if (Model.Stores.Any())
             {
                 <table class="table table-striped table-bordered border">
                     <tr class="table-secondary thead-dark">
-                        <th class="w-25">
-                            <label asp-for="@Model.Books.FirstOrDefault().Name"></label>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Stores.FirstOrDefault().Name)
                         </th>
                         <th>
-                            <label asp-for="@Model.Books.FirstOrDefault().Author.LastName"></label>
+                            @Html.DisplayNameFor(model => model.Stores.FirstOrDefault().Adress)
                         </th>
                         <th>
-                            <label asp-for="@Model.Books.FirstOrDefault().ISBN"></label>
+                            @Html.DisplayNameFor(model => model.Stores.FirstOrDefault().WorkingTime)
                         </th>
-                        <th></th>
+                        <th class="w-25"></th>
                     </tr>
-                    @foreach (var item in Model.Books)
+                    @foreach (var item in Model.Stores)
                     {
                         <tr>
                             <td>
                                 @Html.DisplayFor(m => item.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(m => item.Author.LastName)
+                                @Html.DisplayFor(m => item.Adress)
                             </td>
                             <td>
-                                @Html.DisplayFor(m => item.ISBN)
+                                @Html.DisplayFor(m => item.WorkingTime)
                             </td>
                             <td style="text-align:center;">
                                 <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm w-25 openmodal">Edit</a>
@@ -53,11 +52,12 @@
             }
             else
             {
-                <p>No book available</p>
+                <p>No store available</p>
             }
         </form>
     </div>
 </div>
+
 
 <div id="modDialog" class="modal fade">
 

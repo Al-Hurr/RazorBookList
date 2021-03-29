@@ -1,0 +1,66 @@
+﻿@page
+@model RazorBookList.Pages.Stores.DeleteModel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            @if (true)
+            {
+                <P class="h3">Do you really want to delete the entry?</P>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-route-id="@Model.Store.Id" method="post">
+                            <table class="table">
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Store.Name)</th>
+                                    <td>@Html.DisplayFor(model => model.Store.Name)</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Store.Adress)</th>
+                                    <td>@Html.DisplayFor(model => model.Store.Adress)</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Store.WorkingTime)</th>
+                                    <td>@Html.DisplayFor(model => model.Store.WorkingTime)</td>
+                                </tr>
+                            </table>
+                            <hr />
+                            <div class="form-group row">
+                                <div class="col-4">
+                                    <input type="submit" value="Delete" class="btn btn-danger form-control sub" />
+                                </div>
+                                <div class="col-4">
+                                    <a asp-page="Index"><span class="btn btn-success form-control">Cancel</span></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <P class="h3 text-danger col-12">
+                        Error.
+                    </P>
+                    <p class="h3 text-danger col-12">
+                    The Store is linked by other posts.
+                    </P>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-4">
+                                <a asp-page="Index"><span class="btn btn-success form-control">Cancel</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

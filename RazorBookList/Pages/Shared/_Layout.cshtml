@@ -21,14 +21,27 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+                    @*<ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/BookList/Index">Books</a>
+                            <a class="nav-link text-dark" asp-page="/BookList/Index">Books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Authors/Index">Authors</a>
+                            <a class="nav-link text-dark" asp-page="/Authors/Index">Authors</a>
                         </li>
-                    </ul>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/Stores/Index">Stores</a>
+                        </li>
+                    </ul>*@
+                    <div class="dropdown show flex-grow-0">
+                        <a class="btn btn-success dropdown-toggle text-white" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Administration
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" asp-page="/BookList/Index">Books</a>
+                            <a class="dropdown-item" asp-page="/Authors/Index">Authors</a>
+                            <a class="dropdown-item" asp-page="/Stores/Index">Stores</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
