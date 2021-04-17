@@ -38,3 +38,10 @@ $(function () {
         });
     });
 });
+$(document).on('change', 'input#flexCheckDefault', function () {
+    if ($(this).is(':checked')) {
+        $('select#Book_AuthorId').prop('disabled', true);
+    } else {
+        $('select#Book_AuthorId').prop('disabled', false);
+    }
+});

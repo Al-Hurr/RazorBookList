@@ -45,8 +45,14 @@ namespace RazorBookList.Pages.Stores
             if (store == null)
                 return NotFound();
 
+            if(await _context.RelStoreBook.AnyAsync(x => x.Store.Id == store.Id))
+            {
+                var storeBooks = _context.RelStoreBook.Where(x => x.Store.Id == store.Id);
+                _context.RelStoreBook.RemoveRange(storeBooks);
+            }
+
             _context.Store.Remove(store);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("Index");
         }

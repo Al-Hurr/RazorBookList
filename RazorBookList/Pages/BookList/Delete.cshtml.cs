@@ -46,6 +46,13 @@ namespace RazorBookList.Pages.BookList
             if (book == null)
                 return NotFound();
 
+            if(await _context.RelStoreBook.AnyAsync(x => x.Book.Id == book.Id))
+            {
+                var bookStores = _context.RelStoreBook.Where(x => x.Book.Id == book.Id);
+
+                _context.RelStoreBook.RemoveRange(bookStores);
+            }
+
             _context.Books.Remove(book);
             _context.SaveChanges();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,5 +17,8 @@ namespace RazorBookList.Model
         public int AuthorId { get; set; }
 
         public string ISBN { get; set; }
+
+        [Display(Name = "Cover")]
+        public IFormFile Image { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RazorBookList.Model;
@@ -9,9 +10,10 @@ using RazorBookList.Model;
 namespace RazorBookList.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210329202218_add_RelStoreBook")]
+    partial class add_RelStoreBook
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,9 +57,6 @@ namespace RazorBookList.Migrations
 
                     b.Property<int?>("AuthorId")
                         .HasColumnType("integer");
-
-                    b.Property<byte[]>("Cover")
-                        .HasColumnType("bytea");
 
                     b.Property<string>("ISBN")
                         .HasColumnType("text");

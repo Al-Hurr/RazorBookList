@@ -1,6 +1,7 @@
 ﻿@page
 @model RazorBookList.Pages.BookList.IndexModel
 @{
+
 }
 
 <br />
@@ -11,7 +12,7 @@
     </div>
     <div class="col-3">
         <form method="post">
-            <a class="btn btn-info form-control text-white openmodal" asp-page="/BookList/Create">Add new book</a>
+            <a class="btn btn-info form-control text-white" asp-page="/BookList/Create">Add new book</a>
         </form>
     </div>
     <div class="col-12 border mt-3 p-3">
@@ -20,6 +21,9 @@
             {
                 <table class="table table-striped table-bordered border">
                     <tr class="table-secondary thead-dark">
+                        <th>
+                            <label asp-for="@Model.Books.FirstOrDefault().Cover"></label>
+                        </th>
                         <th class="w-25">
                             <label asp-for="@Model.Books.FirstOrDefault().Name"></label>
                         </th>
@@ -29,11 +33,24 @@
                         <th>
                             <label asp-for="@Model.Books.FirstOrDefault().ISBN"></label>
                         </th>
-                        <th></th>
+                        <th>
+                            <label>In stock</label>
+                        </th>
+                        <th class="w-25"></th>
                     </tr>
                     @foreach (var item in Model.Books)
                     {
                         <tr>
+                            <td>
+                                @if (item.Cover != null)
+                                {
+                                    <img style='width:50px; height:auto;' src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Cover))" />
+                                }
+                                else
+                                {
+                                    <img style='width:50px; height:auto;' src="~/Images/no_image.png" />
+                                }
+                            </td>
                             <td>
                                 @Html.DisplayFor(m => item.Name)
                             </td>
@@ -43,8 +60,11 @@
                             <td>
                                 @Html.DisplayFor(m => item.ISBN)
                             </td>
+                            <td class="text-center">
+                                <a asp-page="Stores" asp-route-id="@item.Id" class="openmodal">Stores</a>
+                            </td>
                             <td style="text-align:center;">
-                                <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm w-25 openmodal">Edit</a>
+                                <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm w-25">Edit</a>
                                 <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm w-25 openmodal">Delete</a>
                             </td>
                         </tr>

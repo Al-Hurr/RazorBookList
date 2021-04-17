@@ -4,7 +4,35 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Hi!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@*<div class="text-center">
+        <h1 class="display-4">Hi!</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <img class="backround" src="Images/image_1.jpg" alt="Sample Photo" />
+    </div>*@
+
+<div class="card-columns">
+    @foreach (var item in Model.Books)
+    {
+        <a onclick="alert('jljnjn')">
+            <div class="card">
+                @if (item.Cover != null)
+                {
+                    <img class="card-img" src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Cover))">
+                }
+                else
+                {
+                    <img class="card-img" src="~/Images/no_image.png">
+                }
+                <div class="card-body">
+                    <div class="card-title text-center">
+                        <h4 class="font-weight-bold">@item.Name</h4>
+                        @if (item.Author != null)
+                        {
+                            <h6>by @item.Author.LastName</h6>
+                        }
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
 </div>

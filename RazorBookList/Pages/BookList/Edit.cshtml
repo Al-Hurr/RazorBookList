@@ -1,49 +1,78 @@
 ﻿@page
 @model RazorBookList.Pages.BookList.EditModel
 @{
-    Layout = null;
 }
 
-<div class="modal-dialog  modal-dialog-centered">
-    <div class="modal-content">
-        <div class="modal-body">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="~/css/bootstrap-multiselect.css" type="text/css" />
 
-            <div class="row">
-                <div class="col-md-12">
-                    <form asp-action="OnPost">
-                        <input hidden asp-for="Book.Id" />
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <input hidden asp-for="Book.Id" />
-                            <label asp-for="Book.Name" class="control-label"></label>
-                            <input asp-for="Book.Name" class="form-control" />
-                            <span asp-validation-for="Book.Name" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Book.AuthorId" class="control-label"></label>
-                            <select class="form-control" asp-for="Book.AuthorId" asp-items="Model.Authors"></select>
-                            <span asp-validation-for="Book.AuthorId" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Book.ISBN" class="control-label"></label>
-                            <input asp-for="Book.ISBN" class="form-control" />
-                            <span asp-validation-for="Book.ISBN" class="text-danger"></span>
-                        </div>
-                        <hr />
-                        <div class="form-group row">
-                            <div class="col-4">
-                                <input type="submit" value="Save" class="btn btn-primary form-control sub" />
-                            </div>
-                            <div class="col-4">
-                                <a asp-page="Index"><span class="btn btn-success form-control">Cancel</span></a>
-                            </div>
-                        </div>
-                    </form>
+<form asp-action="OnPost" enctype="multipart/form-data" role="form">
+    <div class="row container w-75 p-0 m-0">
+        <div class="col-9">
+            <h2 class="text-info text-black-50">Edit book</h2>
+        </div>
+        <div class="col-md-12">
+            <br />
+            <input hidden asp-for="Book.Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input hidden asp-for="Book.Id" />
+                <label asp-for="Book.Name" class="control-label"></label>
+                <input asp-for="Book.Name" class="form-control" />
+                <span asp-validation-for="Book.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.AuthorId" class="control-label"></label>
+                <select class="form-control" asp-for="Book.AuthorId" asp-items="Model.Authors"></select>
+                <span asp-validation-for="Book.AuthorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.ISBN" class="control-label"></label>
+                <input asp-for="Book.ISBN" class="form-control" />
+                <span asp-validation-for="Book.ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Book.Image"></label>
+                <div class="custom-file">
+                    <input class="form-control custom-file-input" asp-for="Book.Image" type="file" />
+                    <label class="custom-file-label">Click here to change photo</label>
+                </div>
+            </div>
+            <br />
+            @if (Model.IsStoresExists)
+            {
+                <div class="form-group">
+                    <label class="control-label mr-5">Available in</label>
+                    <select class="form-control" id="example-modal" multiple="multiple" asp-for="StoreIds" asp-items="Model.Stores">
+                    </select>
+                </div>
+            }
+            <hr />
+            <div class="form-group row">
+                <div class="col-4">
+                    <input type="submit" value="Save" class="btn btn-primary form-control" />
+                </div>
+                <div class="col-4">
+                    <a asp-page="Index"><span class="btn btn-success form-control">Cancel</span></a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
+<script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="~/lib/bootstrap/dist/js/popper.min.js" type="text/javascript"></script>
+<script src="~/js/bootstrap-multiselect.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $('#example-modal').multiselect();
+
+    $(document).ready(function () {
+        $('.custom-file-input').on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).next('.custom-file-label').html(fileName);
+        });
+    });
+</script>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

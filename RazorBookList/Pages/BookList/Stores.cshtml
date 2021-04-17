@@ -1,0 +1,56 @@
+﻿@page
+@model RazorBookList.Pages.BookList.StoresModel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @if (Model.BookStores.Any())
+                    {
+                        <table class="table table-striped table-bordered border">
+                            <tr class="table-secondary thead-dark">
+                                <th class="w-25">
+                                    <label asp-for="@Model.BookStores.FirstOrDefault().Store.Name"></label>
+                                </th>
+                                <th>
+                                    <label asp-for="@Model.BookStores.FirstOrDefault().Store.Adress"></label>
+                                </th>
+                                <th>
+                                    <label asp-for="@Model.BookStores.FirstOrDefault().Store.WorkingTime"></label>
+                                </th>
+                            </tr>
+                            @foreach (var item in Model.BookStores)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(m => item.Store.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.Store.Adress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.Store.WorkingTime)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <P class="h3 text-center">No store available</P>
+                    }
+                    <hr />
+                    <div class="form-group row d-flex justify-content-center">
+                        <div class="col-4">
+                            <a asp-page="Index"><span class="btn btn-success form-control">Back</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

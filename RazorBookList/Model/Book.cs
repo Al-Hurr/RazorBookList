@@ -22,5 +22,7 @@ namespace RazorBookList.Model
 
         [Display(Name = "ISBN")]
         public string ISBN { get; set; }
+
+        public byte[] Cover { get; set; }
     }
 }

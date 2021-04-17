@@ -16,5 +16,6 @@ namespace RazorBookList.Model
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Store> Store { get; set; }
+        public DbSet<RelStoreBook> RelStoreBook { get; set; }
     }
 }
