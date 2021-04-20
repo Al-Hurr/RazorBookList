@@ -58,6 +58,8 @@ namespace RazorBookList.Pages.BookList
             Book.Name = book.Name;
             Book.AuthorId = book.Author?.Id ?? default;
             Book.ISBN = book.ISBN;
+            Book.Price = book.Price;
+            Book.Description = book.Description;
 
             return Page();
         }
@@ -71,7 +73,9 @@ namespace RazorBookList.Pages.BookList
                     Id = Book.Id,
                     Name = Book.Name,
                     Author = await _context.Authors.FindAsync(Book.AuthorId),
-                    ISBN = Book.ISBN
+                    ISBN = Book.ISBN,
+                    Price = Book.Price,
+                    Description = Book.Description
                 };
 
                 if (Book.Image != null)

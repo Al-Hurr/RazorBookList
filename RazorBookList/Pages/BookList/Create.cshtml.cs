@@ -57,7 +57,9 @@ namespace RazorBookList.Pages.BookList
                 {
                     Name = Book.Name,
                     Author = Book.AuthorId == 0 ? null : await _context.Authors.FindAsync(Book.AuthorId),
-                    ISBN = Book.ISBN
+                    ISBN = Book.ISBN,
+                    Price = Book.Price,
+                    Description = Book.Description
                 };
 
                 if (Book.Image != null)
