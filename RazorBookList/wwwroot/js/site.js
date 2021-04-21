@@ -45,3 +45,6 @@ $(document).on('change', 'input#flexCheckDefault', function () {
         $('select#Book_AuthorId').prop('disabled', false);
     }
 });
+$(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+});
