@@ -31,7 +31,7 @@ $(function () {
 
         e.preventDefault();
 
-        $.get(url, function (data) {        
+        $.get(url, function (data) {
             //$('#modDialog').modal('hide');
             $('#modDialog').html(data);
             $('#modDialog').modal('show');
@@ -47,4 +47,13 @@ $(document).on('change', 'input#flexCheckDefault', function () {
 });
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
+});
+
+$(document).on('click', '.add_to_card', function () {
+    if ($('.quantity').val() > 0) {
+        var price = $('.price').data('price');
+        var count = $('.quantity').val();
+        var amount = parseFloat(price.replace(',', '.')) * parseFloat(count.replace(',', '.'));
+        confirm(`Purchase amount ${amount.toString().replace('.', ',')} ₽`);
+    }
 });

@@ -13,7 +13,7 @@
 <div class="card-columns">
     @foreach (var item in Model.Books)
     {
-        <a onclick="alert('jljnjn')">
+        <a asp-page="Book_Page" asp-route-id="@item.Id" class="openmodal text-dark">
             <div class="card">
                 @if (item.Cover != null)
                 {
@@ -35,4 +35,8 @@
             </div>
         </a>
     }
+</div>
+
+<div id="modDialog" class="modal fade">
+
 </div>

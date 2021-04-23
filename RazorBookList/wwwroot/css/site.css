@@ -221,3 +221,13 @@ div.container.overflow {
     border: 1px solid #dee2e6 !important;
     border-radius: .25rem !important;
 }
+
+.index_image img {
+    max-width: 100%;
+    border-radius: .25rem !important;
+}
+
+.book_text {
+    font-family: 'Book Antiqua';
+    word-wrap: break-word;
+}

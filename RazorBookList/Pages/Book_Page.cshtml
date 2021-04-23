@@ -1,0 +1,59 @@
+﻿@page
+@model Book_PageModel
+@{
+    Layout = null;
+}
+<div class="modal-dialog  modal-dialog-centered" style="max-width: 1000px;">
+    <div class="modal-content">
+        <div class="modal-body">
+            <form>
+                <div class="container row">
+                    <div class="col-3">
+                        <hr />
+                        <div class="mt-5 book_text">
+                            <h3>
+                                @Html.DisplayFor(m => Model.Book.Name)
+                            </h3>
+                            @if (Model.Book.Author != null)
+                            {
+                                <h3>
+                                    by @Html.DisplayFor(m => Model.Book.Author.LastName)
+                                </h3>
+                            }
+                        </div>
+                        <h5 class="price" data-price="@Model.Book.Price">@Html.DisplayFor(m => Model.Book.Price)</h5>
+                        <br />
+                        <div class="form-row align-items-end">
+                            <div class="col-md-4 form-group">
+                                <label class="control-label">Quantity</label>
+                                <input type="number" class="form-control quantity" min="1" value="1" />
+                            </div>
+                            <div class=" col-md-8 form-group">
+                                <input type="submit" value="ADD TO CARD" class="btn btn-secondary btn-sm form-control add_to_card" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5 index_image">
+                        @if (Model.Book.Cover != null)
+                        {
+                            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Book.Cover))" />
+                        }
+                        else
+                        {
+                            <img height:auto;' src="~/Images/no_image.png" />
+                        }
+                    </div>
+                    <div class="col-4" style="font-size: medium;">
+                        <hr />
+                        <p class="mt-5 book_text">@Model.Book.Description</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
