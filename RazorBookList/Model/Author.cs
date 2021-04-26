@@ -16,7 +16,7 @@ namespace RazorBookList.Model
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Author name")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [Display(Name = "City")]

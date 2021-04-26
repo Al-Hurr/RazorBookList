@@ -9,10 +9,29 @@
         <h2 class="text-info text-black-50">Authors List</h2>
     </div>
     <div class="col-3">
-        <form method="post">
-            <a class="btn btn-info form-control text-white openmodal" asp-page="/Authors/Create">Add new author</a>
-        </form>
+        <a class="btn btn-info form-control text-white openmodal" asp-page="/Authors/Create">Add new author</a>
     </div>
+    <form asp-action="Index" method="get">
+        <p>
+            <div class="form-row align-items-end">
+                <div class="form-group col">
+                    <label class="control-label">First name</label>
+                    <input type="text" asp-for="FirstName" class="form-control">
+                </div>
+                <div class="form-group col">
+                    <label class="control-label">Last name</label>
+                    <input type="text" asp-for="LastName" class="form-control">
+                </div>
+                <div class="form-group col">
+                    <label class="control-label">City</label>
+                    <input type="text" asp-for="City" class="form-control">
+                </div>
+                <div class="form-group col">
+                    <input type="submit" value="Search" class="btn btn-success btn-sm form-control" />
+                </div>
+            </div>
+        </p>
+    </form>
     <div class="col-12 border mt-3 p-3">
         <form method="post">
             @if (Model.Authors.Any())
@@ -50,7 +69,7 @@
                             </td>
                             <td style="text-align:center;">
                                 <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm w-25 openmodal">Edit</a>
-                                <a asp-page="Delete" asp-route-id="@item.Id"  class="btn btn-danger btn-sm w-25 openmodal">Delete</a>
+                                <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm w-25 openmodal">Delete</a>
                             </td>
                         </tr>
                     }

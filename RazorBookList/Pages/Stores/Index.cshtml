@@ -9,10 +9,29 @@
         <h2 class="text-info text-black-50">Stores List</h2>
     </div>
     <div class="col-3">
-        <form method="post">
-            <a class="btn btn-info form-control text-white openmodal" asp-page="/Stores/Create">Add new store</a>
-        </form>
+        <a class="btn btn-info form-control text-white openmodal" asp-page="/Stores/Create">Add new store</a>-
     </div>
+    <form asp-action="Index" method="get">
+        <p>
+            <div class="form-row align-items-end">
+                <div class="form-group col">
+                    <label class="control-label">Name</label>
+                    <input type="text" asp-for="Name" class="form-control">
+                </div>
+                <div class="form-group col">
+                    <label class="control-label">Adress</label>
+                    <input type="text" asp-for="Adress" class="form-control">
+                </div>
+                <div class="form-group col">
+                    <label class="control-label">Working time</label>
+                    <input type="text" asp-for="WorkingTime" class="form-control">
+                </div>
+                <div class="form-group col">
+                    <input type="submit" value="Search" class="btn btn-success btn-sm form-control" />
+                </div>
+            </div>
+        </p>
+    </form>
     <div class="col-12 border mt-3 p-3">
         <form method="post">
             @if (Model.Stores.Any())

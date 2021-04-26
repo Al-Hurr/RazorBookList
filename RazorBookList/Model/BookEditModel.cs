@@ -22,6 +22,7 @@ namespace RazorBookList.Model
         [Display(Name = "Cover")]
         public IFormFile Image { get; set; }
 
+        [Required]
         [Display(Name = "Price")]
         [Column(TypeName = "decimal(18,2)")]
         [DataType(DataType.Currency)]
