@@ -57,3 +57,39 @@ $(document).on('click', '.add_to_card', function () {
         confirm(`Purchase amount ${amount.toString().replace('.', ',')} ₽`);
     }
 });
+
+
+$(function () {
+    $(document).on('click', "#reset-inputs", function () {
+        if ($('#WorkingTimeFrom').length) {
+            $('#WorkingTimeFrom').val(null);
+        }
+        if ($('#WorkingTimeTo').length) {
+            $('#WorkingTimeTo').val(null);
+        }
+        if ($('#Name').length) {
+            $('#Name').val(null);
+        }
+        if ($('#Adress').length) {
+            $('#Adress').val(null);
+        }
+        if ($('#SearchString').length) {
+            $('#SearchString').val(null);
+        }
+        if ($('#PriceTo').length) {
+            $('#PriceTo').val(null);
+        }
+        if ($('#AuthorId').length) {
+            $('#AuthorId').val(0);
+        }
+        if ($('#FirstName').length) {
+            $('#FirstName').val(null);
+        }
+        if ($('#LastName').length) {
+            $('#LastName').val(null);
+        }
+        if ($('#City').length) {
+            $('#City').val(null);
+        }
+    });
+});

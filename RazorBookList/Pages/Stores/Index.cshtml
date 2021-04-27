@@ -9,7 +9,7 @@
         <h2 class="text-info text-black-50">Stores List</h2>
     </div>
     <div class="col-3">
-        <a class="btn btn-info form-control text-white openmodal" asp-page="/Stores/Create">Add new store</a>-
+        <a class="btn btn-info form-control text-white openmodal" asp-page="/Stores/Create">Add new store</a>
     </div>
     <form asp-action="Index" method="get">
         <p>
@@ -22,12 +22,28 @@
                     <label class="control-label">Adress</label>
                     <input type="text" asp-for="Adress" class="form-control">
                 </div>
-                <div class="form-group col">
-                    <label class="control-label">Working time</label>
-                    <input type="text" asp-for="WorkingTime" class="form-control">
+                @*<div class="form-group col">
+                        <label class="control-label">Working time</label>
+                        <input type="text" asp-for="WorkingTime" class="form-control">
+                    </div>*@
+                <div class="form-group col-5">
+                    <label for="example-time-input" class="control-label">Working time</label>
+                    <div class="form-row">
+                        <div class="col-5">
+                            <label for="example-time-input" class="control-label">from</label>
+                            <input class="form-control" type="time" asp-for="WorkingTimeFrom" >
+                        </div>
+                        <div class="col-5 ml-3">
+                            <label for="example-time-input" class="control-label">to</label>
+                            <input class="form-control" type="time" asp-for="WorkingTimeTo" >
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group col">
                     <input type="submit" value="Search" class="btn btn-success btn-sm form-control" />
+                </div>
+                <div class="form-group col">
+                    <input type="submit" value="Reset" id="reset-inputs" class="btn btn-dark btn-sm form-control" />
                 </div>
             </div>
         </p>
@@ -45,7 +61,7 @@
                             @Html.DisplayNameFor(model => model.Stores.FirstOrDefault().Adress)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Stores.FirstOrDefault().WorkingTime)
+                            @Html.DisplayNameFor(model => model.Stores.FirstOrDefault().WorkingTimeFrom)
                         </th>
                         <th class="w-25"></th>
                     </tr>
@@ -59,7 +75,9 @@
                                 @Html.DisplayFor(m => item.Adress)
                             </td>
                             <td>
-                                @Html.DisplayFor(m => item.WorkingTime)
+                                @Html.DisplayFor(m => item.WorkingTimeFrom) -
+                                @Html.DisplayFor(m => item.WorkingTimeTo)
+
                             </td>
                             <td style="text-align:center;">
                                 <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm w-25 openmodal">Edit</a>

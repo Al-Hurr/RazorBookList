@@ -36,23 +36,18 @@ namespace RazorAuthors.Pages.Authors
 
             if (!string.IsNullOrEmpty(FirstName))
             {
-                Authors = await _context.Authors.Where(x => x.FirstName.ToLower().Contains(FirstName.Trim().ToLower())).ToListAsync();
+                Authors = Authors.Where(x => x.FirstName.ToLower().Contains(FirstName.Trim().ToLower())).ToList();
             }
 
             if (!string.IsNullOrEmpty(LastName))
             {
-                Authors = await _context.Authors.Where(x => x.LastName.ToLower().Contains(LastName.Trim().ToLower())).ToListAsync();
+                Authors = Authors.Where(x => x.LastName.ToLower().Contains(LastName.Trim().ToLower())).ToList();
             }
 
             if (!string.IsNullOrEmpty(City))
             {
-                Authors = await _context.Authors.Where(x => x.City.ToLower().Contains(City.Trim().ToLower())).ToListAsync();
+                Authors = Authors.Where(x => x.City.ToLower().Contains(City.Trim().ToLower())).ToList();
             }
-        }
-
-        public bool IsRelated(int id)
-        {
-            return  _context.Books.Any(x => x.Author.Id == id);
         }
     }
 }

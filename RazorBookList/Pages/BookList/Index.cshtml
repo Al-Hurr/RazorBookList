@@ -21,7 +21,7 @@
                     <input type="text" asp-for="SearchString" class="form-control">
                 </div>
                 @*Дата выпуска: c <input type="number" asp-for="bookDateTimeto" required min="1700" max="@DateTime.Now.Year" size="5">
-                    по <input type="number" asp-for="bookDateTimefrom" required min="1700" max="@DateTime.Now.Year" size="5">*@
+        по <input type="number" asp-for="bookDateTimefrom" required min="1700" max="@DateTime.Now.Year" size="5">*@
                 <div class="form-group col">
                     <label class="control-label">Price to</label>
                     <input type="number" asp-for="PriceTo" class="form-control">
@@ -31,12 +31,15 @@
                     <div class="form-group col">
                         <label class="control-label">Author</label>
                         <select asp-for="AuthorId" asp-items="Model.Authors" class="form-control">
-                            <option value="">Все</option>
+                            <option value="0">Все</option>
                         </select>
                     </div>
                 }
                 <div class="form-group col">
                     <input type="submit" value="Search" class="btn btn-success btn-sm form-control" />
+                </div>
+                <div class="form-group col">
+                    <input type="submit" value="Reset" id="reset-inputs" class="btn btn-dark btn-sm form-control" />
                 </div>
             </div>
         </p>

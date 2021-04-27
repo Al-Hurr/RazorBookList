@@ -20,7 +20,7 @@
                                     <label asp-for="@Model.BookStores.FirstOrDefault().Store.Adress"></label>
                                 </th>
                                 <th>
-                                    <label asp-for="@Model.BookStores.FirstOrDefault().Store.WorkingTime"></label>
+                                    <label asp-for="@Model.BookStores.FirstOrDefault().Store.WorkingTimeFrom"></label>
                                 </th>
                             </tr>
                             @foreach (var item in Model.BookStores)
@@ -33,7 +33,8 @@
                                         @Html.DisplayFor(m => item.Store.Adress)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(m => item.Store.WorkingTime)
+                                        @Html.DisplayFor(m => item.Store.WorkingTimeFrom) -
+                                        @Html.DisplayFor(m => item.Store.WorkingTimeTo)
                                     </td>
                                 </tr>
                             }

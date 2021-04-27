@@ -33,7 +33,7 @@ namespace RazorBookList.Pages.BookList
         [ModelBinder]
         public int? PriceTo { get; set; }
 
-        public async Task<IActionResult> OnGet()
+        public async Task OnGet()
         {
             Books = await _context.Books
                 .Include(x => x.Author)
@@ -45,20 +45,18 @@ namespace RazorBookList.Pages.BookList
 
             if (!String.IsNullOrEmpty(SearchString))
             {
-                Books = await _context.Books.Where(x => x.Name.ToLower().Contains(SearchString.Trim().ToLower())).ToListAsync();
+                Books = Books.Where(x => x.Name.ToLower().Contains(SearchString.Trim().ToLower())).ToList();
             }
 
-            if (AuthorId.HasValue)
+            if (AuthorId.HasValue && AuthorId != 0)
             {
-                Books = await _context.Books.Where(x => x.Author.Id == AuthorId).ToListAsync();
+                Books = Books.Where(x => x.Author.Id == AuthorId).ToList();
             }
 
             if (PriceTo.HasValue)
             {
-                Books = await _context.Books.Where(x => x.Price <= PriceTo).ToListAsync();
+                Books = Books.Where(x => x.Price <= PriceTo).ToList();
             }
-
-            return Page();
         }
 
         //public async Task<IActionResult> OnPostDelete(int? id)

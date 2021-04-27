@@ -28,7 +28,10 @@ namespace RazorAuthors.Pages.Stores
         public string Adress { get; set; }
 
         [ModelBinder]
-        public string WorkingTime { get; set; }
+        public string WorkingTimeFrom { get; set; }
+
+        [ModelBinder]
+        public string WorkingTimeTo { get; set; }
 
         public async Task OnGet()
         {
@@ -36,17 +39,22 @@ namespace RazorAuthors.Pages.Stores
 
             if (!string.IsNullOrEmpty(Name))
             {
-                Stores = await _context.Store.Where(x => x.Name.ToLower().Contains(Name.Trim().ToLower())).ToListAsync();
-            }
+                Stores = Stores.Where(x => x.Name.ToLower().Contains(Name.Trim().ToLower())).ToList();
+            }   
 
             if (!string.IsNullOrEmpty(Adress))
             {
-                Stores = await _context.Store.Where(x => x.Adress.ToLower().Contains(Adress.Trim().ToLower())).ToListAsync();
+                Stores = Stores.Where(x => x.Adress.ToLower().Contains(Adress.Trim().ToLower())).ToList();
             }
 
-            if (!string.IsNullOrEmpty(WorkingTime))
+            if (!string.IsNullOrEmpty(WorkingTimeFrom))
             {
-                Stores = await _context.Store.Where(x => x.WorkingTime.ToLower().Contains(WorkingTime.Trim().ToLower())).ToListAsync();
+                Stores = Stores.Where(x => x.WorkingTimeFrom.TimeOfDay >= Convert.ToDateTime(WorkingTimeFrom).TimeOfDay).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(WorkingTimeTo))
+            {
+                Stores = Stores.Where(x => x.WorkingTimeTo.TimeOfDay <= Convert.ToDateTime(WorkingTimeTo).TimeOfDay).ToList();
             }
         }
     }

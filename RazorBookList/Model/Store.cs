@@ -20,6 +20,9 @@ namespace RazorBookList.Model
         public string Adress { get; set; }
 
         [Display(Name = "Working time")]
-        public string WorkingTime { get; set; }
+        [DataType(DataType.Time)]
+        public DateTime WorkingTimeFrom { get; set; }
+        [DataType(DataType.Time)]
+        public DateTime WorkingTimeTo { get; set; }
     }
 }
