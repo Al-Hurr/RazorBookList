@@ -81,7 +81,7 @@ body {
     cursor: pointer;
 }
 
-/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+/*Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 .card-columns .card:hover .card-img {
     opacity: 1;
@@ -93,28 +93,6 @@ for details on configuring this project to bundle and minify static web assets. 
     background: #fbfafd;
 }
 
-.card-columns .card-img {
-    height: 330px;
-    vertical-align: bottom;
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-    opacity: .8;
-}
-
-.modal .card-img {
-    height: 500px;
-    vertical-align: bottom;
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover; /* Resize the background image to cover the entire container */
-}
-
-.card-columns .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(37,33,82,.12), 0 4px 8px rgba(37,33,82,.06);
-}
-
 a.navbar-brand {
     white-space: normal;
     font-family: 'Cera-Regular ☞';
@@ -123,7 +101,7 @@ a.navbar-brand {
     word-break: break-all;
 }
 
-/* Provide sufficient contrast against white background */
+/* Provide sufficient contrast against white background*/ 
 a {
     color: #0366d6;
 }
@@ -140,8 +118,8 @@ a {
     border-color: #1861ac;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+/*Sticky footer styles
+-------------------------------------------------- */ 
 html {
     font-size: 14px;
 }
@@ -169,7 +147,7 @@ button.accept-policy {
     line-height: inherit;
 }
 
-/* Sticky footer styles
+/*Sticky footer styles
 -------------------------------------------------- */
 html {
     position: relative;
@@ -177,7 +155,7 @@ html {
 }
 
 body {
-    /* Margin bottom by footer height */
+    /*Margin bottom by footer height */
     margin-bottom: 60px;
 }
 
@@ -197,7 +175,7 @@ ul {
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
+    line-height: 60px; /*Vertically center the text there */
     font-family: 'Nunito', sans-serif;
 }
 /*Backgrounds*/
@@ -223,7 +201,7 @@ div.container.overflow {
 }
 
 .index_image img {
-    max-width: 100%;
+    max-width: 80%;
     border-radius: .25rem !important;
 }
 
@@ -231,3 +209,72 @@ div.container.overflow {
     font-family: 'Book Antiqua';
     word-wrap: break-word;
 }
+
+/*----------------------new-style-----------------*/
+
+.profile-card-2 {
+    max-width: 300px;
+    background-color: #FFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+    background-position: center;
+    overflow: hidden;
+    position: relative;
+    margin: 10px auto;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+    .profile-card-2 img {
+        transition: all linear 0.25s;
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    .profile-card-2 .profile-name {
+        position: absolute;
+        left: 30px;
+        bottom: 70px;
+        font-size: 30px;
+        color: #FFF;
+        text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        font-weight: bold;
+        transition: all linear 0.25s;
+    }
+
+    .profile-card-2 .profile-icons {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        color: #FFF;
+        transition: all linear 0.25s;
+    }
+
+    .profile-card-2 .profile-username {
+        position: absolute;
+        bottom: 50px;
+        left: 30px;
+        color: #FFF;
+        font-size: 13px;
+        transition: all linear 0.25s;
+    }
+
+    .profile-card-2 .profile-icons .fa {
+        margin: 5px;
+    }
+
+    .profile-card-2:hover img {
+        filter: grayscale(100%) blur(1px);
+    }
+
+    .profile-card-2:hover .profile-name {
+        bottom: 80px;
+    }
+
+    .profile-card-2:hover .profile-username {
+        bottom: 60px;
+    }
+
+    .profile-card-2:hover .profile-icons {
+        right: 40px;
+    }
+
