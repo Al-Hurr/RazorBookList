@@ -16,11 +16,12 @@
                             </h3>
                             @if (Model.Book.Author != null)
                             {
-                                <h3>
-                                    by @Html.DisplayFor(m => Model.Book.Author.LastName)
-                                </h3>
+                                <h5>
+                                    by @Html.DisplayFor(m => Model.Book.Author.FirstName) @Html.DisplayFor(m => Model.Book.Author.LastName)
+                                </h5>
                             }
                         </div>
+                        <br />
                         <h5 class="price" data-price="@Model.Book.Price">@Html.DisplayFor(m => Model.Book.Price)</h5>
                         <br />
                         <div class="form-row align-items-end">
@@ -32,6 +33,13 @@
                                 <input type="submit" value="ADD TO CARD" class="btn btn-secondary btn-sm form-control add_to_card" />
                             </div>
                         </div>
+                        @if (Model.BookStores.Any())
+                        {
+                            foreach (var store in Model.BookStores)
+                            {
+                                <p>@Html.DisplayFor(m => store.Store.Name), @Html.DisplayFor(m => store.Store.Adress), @Html.DisplayFor(m => store.Store.WorkingTimeFrom) - @Html.DisplayFor(m => store.Store.WorkingTimeTo)</p>
+                            }
+                        }
                     </div>
                     <div class="col-5 index_image">
                         @if (Model.Book.Cover != null)

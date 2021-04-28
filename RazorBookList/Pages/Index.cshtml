@@ -17,7 +17,7 @@
             <div class="card">
                 @if (item.Cover != null)
                 {
-                    <img class="card-img" src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Cover))">
+                    <img class="card-img-top" src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Cover))">
                 }
                 else
                 {
@@ -28,7 +28,7 @@
                         <h4 class="font-weight-bold">@item.Name</h4>
                         @if (item.Author != null)
                         {
-                            <h6>by @item.Author.LastName</h6>
+                    <h6>by @item.Author.FirstName @item.Author.LastName</h6>
                         }
                     </div>
                 </div>

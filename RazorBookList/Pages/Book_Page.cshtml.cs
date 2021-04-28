@@ -23,6 +23,8 @@ namespace RazorBookList.Pages
 
         public Book Book { get; set; }
 
+        public List<RelStoreBook> BookStores { get; set; }
+
         public async Task<IActionResult> OnGet(int? id)
         {
             if (!id.HasValue)
@@ -31,6 +33,8 @@ namespace RazorBookList.Pages
             }
 
             Book = await _context.Books.Include(x => x.Author).FirstOrDefaultAsync(x => x.Id == id);
+
+            BookStores = await _context.RelStoreBook.Include(x => x.Store).Where(x => x.Book.Id == id).ToListAsync();
 
             return Page();
         }
