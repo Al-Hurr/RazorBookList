@@ -34,6 +34,7 @@ namespace RazorBookList.Pages.Authors
             if (Author == null)
                 return NotFound();
 
+            // Если таблица Authors является связанной с таблицей  Books, то не даем удалить сущность
             IsRelated = await _context.Books.AnyAsync(x => x.Author.Id == Author.Id);
 
             return Page();

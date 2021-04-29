@@ -58,21 +58,5 @@ namespace RazorBookList.Pages.BookList
                 Books = Books.Where(x => x.Price <= PriceTo).ToList();
             }
         }
-
-        //public async Task<IActionResult> OnPostDelete(int? id)
-        //{
-        //    if (!id.HasValue)
-        //        return NotFound();
-
-        //    var book = await _context.Books.FindAsync(id.Value);
-
-        //    if(book == null)
-        //        return NotFound();
-
-        //    _context.Books.Remove(book);
-        //    _context.SaveChanges();
-
-        //    return RedirectToPage();
-        //}
     }
 }

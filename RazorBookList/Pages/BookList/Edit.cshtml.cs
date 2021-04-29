@@ -42,7 +42,9 @@ namespace RazorBookList.Pages.BookList
             Authors = new SelectList(authors, nameof(Author.Id), nameof(Author.LastName));
 
             var stores = await _context.Store.ToListAsync();
+
             IsStoresExists = stores.Any();
+
             Stores = new SelectList(stores, nameof(Store.Id), nameof(Store.Name));
 
             StoreIds = await _context.RelStoreBook
@@ -78,6 +80,7 @@ namespace RazorBookList.Pages.BookList
                     Description = Book.Description
                 };
 
+                // Если новая картинка не выбрана, то оставляем старую
                 if (Book.Image != null)
                 {
                     if (Book.Image.Length > 0)
@@ -100,12 +103,14 @@ namespace RazorBookList.Pages.BookList
 
                 _context.Update(book);
 
+                
                 if (StoreIds.Length != 0)
                 {
                     var bookStores = _context.RelStoreBook.Where(x => x.Book.Id == book.Id);
 
                     if (bookStores.Any())
                     {
+                        // Если есть старые записи, то сначало их удаляем, чтобы не было повторений.
                         _context.RelStoreBook.RemoveRange(bookStores);
                     }
 

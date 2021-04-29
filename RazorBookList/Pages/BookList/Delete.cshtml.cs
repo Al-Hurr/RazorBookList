@@ -46,7 +46,8 @@ namespace RazorBookList.Pages.BookList
             if (book == null)
                 return NotFound();
 
-            if(await _context.RelStoreBook.AnyAsync(x => x.Book.Id == book.Id))
+            // Если в таблице RelStoreBook есть связанные сущности с таблицей Book, то сначало удаляем их.
+            if (await _context.RelStoreBook.AnyAsync(x => x.Book.Id == book.Id))
             {
                 var bookStores = _context.RelStoreBook.Where(x => x.Book.Id == book.Id);
 

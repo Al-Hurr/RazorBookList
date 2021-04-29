@@ -25,6 +25,7 @@ namespace RazorBookList.Model
 
         public byte[] Cover { get; set; }
 
+        [Required]
         [Display(Name = "Price")]
         [Column(TypeName = "decimal(18,2)")]
         [DataType(DataType.Currency)]

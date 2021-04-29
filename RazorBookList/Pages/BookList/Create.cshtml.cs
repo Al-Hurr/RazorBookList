@@ -80,9 +80,11 @@ namespace RazorBookList.Pages.BookList
                 await _context.AddAsync(book);
                 await _context.SaveChangesAsync();
 
+                // Передаем Id сущностей Store и создаем многосвязную таблицу Books - Stores (RelStoreBook)
                 if (StoreIds.Length != 0)
                 {
-                    var createdBook = await _context.Books.FirstOrDefaultAsync(x => x.Name == book.Name && x.Author == book.Author && x.ISBN == book.ISBN);
+                    var createdBook = await _context.Books
+                        .FirstOrDefaultAsync(x => x.Name == book.Name && x.Author == book.Author && x.ISBN == book.ISBN);
 
                     for (int i = 0; i < StoreIds.Length; i++)
                     {
@@ -93,8 +95,8 @@ namespace RazorBookList.Pages.BookList
                         };
 
                         await _context.AddAsync(bookStore);
-                        await _context.SaveChangesAsync();
                     }
+                    await _context.SaveChangesAsync();
                 }
 
                 return RedirectToPage("Index");
