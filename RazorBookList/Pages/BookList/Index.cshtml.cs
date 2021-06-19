@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.BookList
 {
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly BookService _bookService;
+        private readonly AuthorService _authorService;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(BookService bookService, AuthorService authorService)
         {
-            _context = context;
+            _bookService = bookService;
+            _authorService = authorService;
         }
 
         public List<Book> Books { get; set; }
@@ -35,11 +38,9 @@ namespace RazorBookList.Pages.BookList
 
         public async Task OnGet()
         {
-            Books = await _context.Books
-                .Include(x => x.Author)
-                .ToListAsync();
+            Books = await _bookService.GetAllAsync();
 
-            var authors = await _context.Authors.ToListAsync();
+            var authors = await _authorService.GetAllAsync();
 
             Authors = new SelectList(authors, nameof(Author.Id), nameof(Author.LastName));
 

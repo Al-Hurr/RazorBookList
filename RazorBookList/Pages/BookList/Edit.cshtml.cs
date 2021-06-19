@@ -9,16 +9,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.BookList
 {
     public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly BookService _bookService;
+        private readonly AuthorService _authorService;
+        private readonly StoreService _storeService;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(BookService bookService, AuthorService authorService, StoreService storeService)
         {
-            _context = context;
+            _bookService = bookService;
+            _authorService = authorService;
+            _storeService = storeService;
         }
         public bool IsStoresExists { get; set; }
 
@@ -27,7 +32,7 @@ namespace RazorBookList.Pages.BookList
         = new BookEditModel();
 
         [BindProperty]
-        public int[] StoreIds { get; set; }
+        public int[] StoresId { get; set; }
 
         public SelectList Authors { get; set; }
         public SelectList Stores { get; set; }
@@ -38,23 +43,19 @@ namespace RazorBookList.Pages.BookList
             {
                 return NotFound();
             }
-            var authors = await _context.Authors.ToListAsync();
+            var authors = await _authorService.GetAllAsync();
             Authors = new SelectList(authors, nameof(Author.Id), nameof(Author.LastName));
 
-            var stores = await _context.Store.ToListAsync();
+            var stores = await _storeService.GetAllAsync();
 
             IsStoresExists = stores.Any();
 
             Stores = new SelectList(stores, nameof(Store.Id), nameof(Store.Name));
 
-            StoreIds = await _context.RelStoreBook
-                .Where(x => x.Book.Id == id)
-                .Select(x => x.Store.Id)
-                .ToArrayAsync();
+            var bookStores = await _bookService.GetBookStoresAsync(id.Value);
+            StoresId = bookStores.Select(x => x.Store.Id).ToArray();
 
-            var book = await _context.Books
-                .Include(x => x.Author)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var book = await _bookService.GetAsync(id.Value);
 
             Book.Id = book.Id;
             Book.Name = book.Name;
@@ -70,63 +71,7 @@ namespace RazorBookList.Pages.BookList
         {
             if (ModelState.IsValid)
             {
-                var book = new Book()
-                {
-                    Id = Book.Id,
-                    Name = Book.Name,
-                    Author = await _context.Authors.FindAsync(Book.AuthorId),
-                    ISBN = Book.ISBN,
-                    Price = Book.Price,
-                    Description = Book.Description
-                };
-
-                // Если новая картинка не выбрана, то оставляем старую
-                if (Book.Image != null)
-                {
-                    if (Book.Image.Length > 0)
-                    {
-                        byte[] imageData = null;
-
-                        using (var binaryReader = new BinaryReader(Book.Image.OpenReadStream()))
-                        {
-                            imageData = binaryReader.ReadBytes((int)Book.Image.Length);
-                        }
-
-                        book.Cover = imageData;
-                    }
-                }
-                else
-                {
-                    var item = await _context.Books.AsNoTracking().FirstOrDefaultAsync(x => x.Id == book.Id);
-                    book.Cover = item.Cover;
-                }
-
-                _context.Update(book);
-
-                
-                if (StoreIds.Length != 0)
-                {
-                    var bookStores = _context.RelStoreBook.Where(x => x.Book.Id == book.Id);
-
-                    if (bookStores.Any())
-                    {
-                        // Если есть старые записи, то сначало их удаляем, чтобы не было повторений.
-                        _context.RelStoreBook.RemoveRange(bookStores);
-                    }
-
-                    for (int i = 0; i < StoreIds.Length; i++)
-                    {
-                        var BookStore = new RelStoreBook()
-                        {
-                            Book = book,
-                            Store = await _context.Store.FindAsync(StoreIds[i])
-                        };
-
-                        await _context.AddAsync(BookStore);
-                    }
-                }
-
-                await _context.SaveChangesAsync();
+                await _bookService.UpdateAsync(Book, StoresId);
 
                 return RedirectToPage("Index");
             }

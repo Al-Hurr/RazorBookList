@@ -6,27 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.BookList
 {
     public class StoresModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly BookService _bookService;
 
-        public StoresModel(ApplicationDbContext context)
+        public StoresModel(BookService bookService)
         {
-            _context = context;
+            _bookService = bookService;
         }
 
         public List<RelStoreBook> BookStores { get; set; }
 
         public async Task<IActionResult> OnGet(int? id)
         {
-            BookStores = await _context.RelStoreBook
-                .Include(x => x.Store)
-                .Include(x => x.Book)
-                .Where(x => x.Book.Id == id)
-                .ToListAsync();
+            BookStores = await _bookService.GetBookStoresAsync(id.Value);
 
             return Page();
         }

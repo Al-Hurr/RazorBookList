@@ -15,6 +15,7 @@ namespace RazorBookList.Model
         [Required]
         public string Name { get; set; }
 
+        [Display(Name = "Author")]
         public int AuthorId { get; set; }
 
         public string ISBN { get; set; }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList
 {
@@ -28,6 +29,9 @@ namespace RazorBookList
             services.AddDbContext<ApplicationDbContext>(option => option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllersWithViews();
+            services.AddTransient<BookService>();
+            services.AddTransient<AuthorService>();
+            services.AddTransient<StoreService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

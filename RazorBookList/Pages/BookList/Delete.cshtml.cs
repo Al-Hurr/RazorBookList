@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.BookList
 {
     public class DeleteModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly BookService _bookService;
 
-        public DeleteModel(ApplicationDbContext context)
+        public DeleteModel(BookService bookService)
         {
-            _context = context;
+            _bookService = bookService;
         }
 
         [BindProperty]
@@ -26,9 +27,7 @@ namespace RazorBookList.Pages.BookList
             if (!id.HasValue)
                 return NotFound();
 
-            Book = await _context.Books
-                .Include(x => x.Author)
-                .FirstOrDefaultAsync(x => x.Id == id.Value);
+            Book = await _bookService.GetAsync(id.Value);
 
             if (Book == null)
                 return NotFound();
@@ -41,21 +40,7 @@ namespace RazorBookList.Pages.BookList
             if (!id.HasValue)
                 return NotFound();
 
-            var book = await _context.Books.FindAsync(id.Value);
-
-            if (book == null)
-                return NotFound();
-
-            // Если в таблице RelStoreBook есть связанные сущности с таблицей Book, то сначало удаляем их.
-            if (await _context.RelStoreBook.AnyAsync(x => x.Book.Id == book.Id))
-            {
-                var bookStores = _context.RelStoreBook.Where(x => x.Book.Id == book.Id);
-
-                _context.RelStoreBook.RemoveRange(bookStores);
-            }
-
-            _context.Books.Remove(book);
-            _context.SaveChanges();
+            await _bookService.DeleteAsync(id.Value);
 
             return RedirectToPage("Index");
         }
