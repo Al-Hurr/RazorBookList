@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.Authors
 {
     public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AuthorService _authorService;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(AuthorService authorService)
         {
-            _context = context;
+            _authorService = authorService;
         }
 
         [BindProperty]
@@ -27,7 +28,7 @@ namespace RazorBookList.Pages.Authors
             if (!id.HasValue)
                 return NotFound();
 
-            Author = await _context.Authors.FindAsync(id);
+            Author = await _authorService.GetAsync(id.Value);
 
             if (Author == null)
                 return NotFound();
@@ -39,10 +40,7 @@ namespace RazorBookList.Pages.Authors
         {
             if (ModelState.IsValid)
             {
-                _context.Update(Author);
-
-                await _context.SaveChangesAsync();
-
+                await _authorService.UpdateAsync(Author);
                 return RedirectToPage("Index");
             }
             return RedirectToPage();

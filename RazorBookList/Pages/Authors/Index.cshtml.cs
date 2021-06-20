@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorAuthors.Pages.Authors
 {
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AuthorService _authorService;
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(AuthorService authorService)
         {
-            _context = context;
+            _authorService = authorService;
         }
 
         public List<Author> Authors { get; set; }
@@ -32,7 +33,7 @@ namespace RazorAuthors.Pages.Authors
 
         public async Task OnGet()
         {
-            Authors = await _context.Authors.ToListAsync();
+            Authors = await _authorService.GetAllAsync();
 
             if (!string.IsNullOrEmpty(FirstName))
             {

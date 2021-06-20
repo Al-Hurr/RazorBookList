@@ -20,5 +20,37 @@ namespace RazorBookList.Services
         {
             return await _context.Store.ToListAsync();
         }
+
+        public async Task<Store> GetAsync(int id)
+        {
+            return await _context.Store.FindAsync(id);
+        }
+
+        public async Task UpdateAsync(Store store)
+        {
+            _context.Update(store);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var store = await GetAsync(id);
+
+            // Если в многосвязной таблице RelStoreBook есть записи, которые ссылаются на эту сущность, то сначало удаляем их.
+            if (await _context.RelStoreBook.AnyAsync(x => x.Store.Id == store.Id))
+            {
+                var storeBooks = _context.RelStoreBook.Where(x => x.Store.Id == store.Id);
+                _context.RelStoreBook.RemoveRange(storeBooks);
+            }
+
+            _context.Store.Remove(store);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task CreateAsync(Store store)
+        {
+            await _context.Store.AddAsync(store);
+            await _context.SaveChangesAsync();
+        }
     }
 }

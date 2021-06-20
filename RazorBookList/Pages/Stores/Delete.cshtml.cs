@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.Stores
 {
     public class DeleteModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly StoreService _storeService;
 
-        public DeleteModel(ApplicationDbContext context)
+        public DeleteModel(StoreService bookService)
         {
-            _context = context;
+            _storeService = bookService;
         }
 
         [BindProperty]
@@ -26,8 +27,7 @@ namespace RazorBookList.Pages.Stores
             if (!id.HasValue)
                 return NotFound();
 
-            Store = await _context.Store
-                .FindAsync(id.Value);
+            Store = await _storeService.GetAsync(id.Value);
 
             if (Store == null)
                 return NotFound();
@@ -40,20 +40,7 @@ namespace RazorBookList.Pages.Stores
             if (!id.HasValue)
                 return NotFound();
 
-            var store = await _context.Store.FindAsync(id.Value);
-
-            if (store == null)
-                return NotFound();
-
-            // Если в таблице RelStoreBook есть связанные сущности с таблицей Book, то сначало удаляем их.
-            if (await _context.RelStoreBook.AnyAsync(x => x.Store.Id == store.Id))
-            {
-                var storeBooks = _context.RelStoreBook.Where(x => x.Store.Id == store.Id);
-                _context.RelStoreBook.RemoveRange(storeBooks);
-            }
-
-            _context.Store.Remove(store);
-            await _context.SaveChangesAsync();
+            await _storeService.DeleteAsync(id.Value);
 
             return RedirectToPage("Index");
         }

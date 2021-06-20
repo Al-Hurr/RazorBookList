@@ -7,18 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages
 {
     public class Book_PageModel : PageModel
     {
-        private readonly ILogger<Book_PageModel> _logger;
-        private readonly ApplicationDbContext _context;
+        private readonly BookService _bookService;
 
-        public Book_PageModel(ILogger<Book_PageModel> logger, ApplicationDbContext context)
+        public Book_PageModel(BookService bookService)
         {
-            _logger = logger;
-            _context = context;
+            _bookService = bookService;
         }
 
         public Book Book { get; set; }
@@ -32,9 +31,8 @@ namespace RazorBookList.Pages
                 return NotFound();
             }
 
-            Book = await _context.Books.Include(x => x.Author).FirstOrDefaultAsync(x => x.Id == id);
-
-            BookStores = await _context.RelStoreBook.Include(x => x.Store).Where(x => x.Book.Id == id).ToListAsync();
+            Book = await _bookService.GetAsync(id.Value);
+            BookStores = await _bookService.GetBookStoresAsync(id.Value);
 
             return Page();
         }

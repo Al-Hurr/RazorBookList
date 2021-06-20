@@ -7,7 +7,8 @@
 <div class="modal-dialog  modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-body">
-            @if (!Model.IsRelated)
+            @*Если на данную сущность не ссылаются сущности Book, разрешаем удаление*@
+            @if (!Model.IsAnyBookExist)
             {
                 <P class="h3">Do you really want to delete the entry?</P>
                 <div class="row">

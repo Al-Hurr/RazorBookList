@@ -6,36 +6,36 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.Authors
 {
     public class DeleteModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AuthorService _authorService;
 
-        public DeleteModel(ApplicationDbContext context)
+        public DeleteModel(AuthorService authorService)
         {
-            _context = context;
+            _authorService = authorService;
         }
 
         [BindProperty]
         public Author Author { get; set; }
 
-        public bool IsRelated { get; set; }
+        public bool IsAnyBookExist { get; set; }
 
         public async Task<IActionResult> OnGet(int? id)
         {
             if (!id.HasValue)
                 return NotFound();
 
-            Author = await _context.Authors
-                .FindAsync(id.Value);
+            Author = await _authorService.GetAsync(id.Value);
 
             if (Author == null)
                 return NotFound();
 
-            // Если таблица Authors является связанной с таблицей  Books, то не даем удалить сущность
-            IsRelated = await _context.Books.AnyAsync(x => x.Author.Id == Author.Id);
+            // Проверка, ссылаются ли сущности Book на данную сущность
+            IsAnyBookExist = await _authorService.IsAnyBookExist(id.Value);
 
             return Page();
         }
@@ -45,13 +45,7 @@ namespace RazorBookList.Pages.Authors
             if (!id.HasValue)
                 return NotFound();
 
-            var author = await _context.Authors.FindAsync(id.Value);
-
-            if (author == null)
-                return NotFound();
-
-            _context.Authors.Remove(author);
-            _context.SaveChanges();
+            await _authorService.DeleteAsync(id.Value);
 
             return RedirectToPage("Index");
         }

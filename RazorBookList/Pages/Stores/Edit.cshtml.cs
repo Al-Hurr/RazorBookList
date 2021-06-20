@@ -7,16 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.Stores
 {
     public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly StoreService _storeService;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(StoreService bookService)
         {
-            _context = context;
+            _storeService = bookService;
         }
 
         [BindProperty]
@@ -27,7 +28,7 @@ namespace RazorBookList.Pages.Stores
             if (!id.HasValue)
                 return NotFound();
 
-            Store = await _context.Store.FindAsync(id);
+            Store = await _storeService.GetAsync(id.Value);
 
             if (Store == null)
                 return NotFound();
@@ -39,10 +40,7 @@ namespace RazorBookList.Pages.Stores
         {
             if (ModelState.IsValid)
             {
-                _context.Update(Store);
-
-                await _context.SaveChangesAsync();
-
+                await _storeService.UpdateAsync(Store);
                 return RedirectToPage("Index");
             }
             return RedirectToPage();

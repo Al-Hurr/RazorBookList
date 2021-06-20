@@ -25,5 +25,29 @@ namespace RazorBookList.Services
         {
             return await _context.Authors.ToListAsync();
         }
+
+        public async Task UpdateAsync(Author author)
+        {
+            _context.Update(author);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsAnyBookExist(int id)
+        {
+            return await _context.Books.AnyAsync(x => x.Author.Id == id);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var author = await GetAsync(id);
+            _context.Authors.Remove(author);
+            _context.SaveChanges();
+        }
+
+        public async Task CreateAsync(Author author)
+        {
+            await _context.Authors.AddAsync(author);
+            await _context.SaveChangesAsync();
+        }
     }
 }

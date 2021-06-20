@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.Stores
 {
     public class CreateModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly StoreService _storeService;
 
-        public CreateModel(ApplicationDbContext context)
+        public CreateModel(StoreService bookService)
         {
-            _context = context;
+            _storeService = bookService;
         }
 
         [BindProperty]
@@ -29,8 +30,7 @@ namespace RazorBookList.Pages.Stores
         {
             if (ModelState.IsValid)
             {
-                await _context.Store.AddAsync(Store);
-                await _context.SaveChangesAsync();
+                await _storeService.CreateAsync(Store);
                 return RedirectToPage("Index");
             }
             return Page();

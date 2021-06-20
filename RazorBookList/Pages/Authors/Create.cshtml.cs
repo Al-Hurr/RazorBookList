@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorBookList.Model;
+using RazorBookList.Services;
 
 namespace RazorBookList.Pages.Authors
 {
     public class CreateModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AuthorService _authorService;
 
-        public CreateModel(ApplicationDbContext context)
+        public CreateModel(AuthorService authorService)
         {
-            _context = context;
+            _authorService = authorService;
         }
 
         [BindProperty]
@@ -29,8 +30,7 @@ namespace RazorBookList.Pages.Authors
         {
             if (ModelState.IsValid)
             {
-                await _context.Authors.AddAsync(Author);
-                await _context.SaveChangesAsync();
+                await _authorService.CreateAsync(Author);
                 return RedirectToPage("Index");
             }
             return Page();
