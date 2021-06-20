@@ -52,18 +52,15 @@ namespace RazorBookList.Services
                 .ToListAsync();
         }
 
-        public async Task<byte[]> ImageToByte(IFormFile image)
+        public byte[] ImageToByte(IFormFile image)
         {
-            return await Task.Run(() =>
-             {
-                 byte[] imageData = null;
+            byte[] imageData = null;
 
-                 using (var binaryReader = new BinaryReader(image.OpenReadStream()))
-                 {
-                     imageData = binaryReader.ReadBytes((int)image.Length);
-                 }
-                 return imageData;
-             });
+            using (var binaryReader = new BinaryReader(image.OpenReadStream()))
+            {
+                imageData = binaryReader.ReadBytes((int)image.Length);
+            }
+            return imageData;
         }
 
         public async Task CreateOrUpdateBookStores(Book book, int[] storesId)
@@ -100,15 +97,15 @@ namespace RazorBookList.Services
                 Description = bookEditModel.Description
             };
 
-            // Если выбрана новая картинка
+            // Если выбрана новая картинка, то меняем картинку
             if (bookEditModel.Image != null)
             {
                 if (bookEditModel.Image.Length > 0)
                 {
-                    book.Cover = await ImageToByte(bookEditModel.Image);
+                    book.Cover = ImageToByte(bookEditModel.Image);
                 }
             }
-            //Иначе оставляем старую
+            //Иначе оставляем старую (сначало вытаскиваю ее из базы, чтобы сохранился, т.к. он не биндится)
             else
             {
                 var bookFromDb = await GetAsync(book.Id, true);
@@ -116,7 +113,6 @@ namespace RazorBookList.Services
             }
 
             _context.Update(book);
-
 
             if (storesId.Length != 0)
             {
@@ -161,7 +157,7 @@ namespace RazorBookList.Services
             {
                 if (bookCreateModel.Image.Length > 0)
                 {
-                    book.Cover = await ImageToByte(bookCreateModel.Image);
+                    book.Cover = ImageToByte(bookCreateModel.Image);
                 }
             }
 
